@@ -1,12 +1,17 @@
 services:
   app:
     build: .
+    stdin_open: true
+    tty: true
     depends_on:
       - db
+      - ollama
     environment:
       DB_URL: ${DB_URL}
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
+      OLLAMA_URL: ${OLLAMA_URL}
+      OLLAMA_MODEL: ${OLLAMA_MODEL}
 
   db:
     image: postgres:16
@@ -14,8 +19,18 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5433:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data  # persists data between runs
+      - pgdata:/var/lib/postgresql/data
+
+  ollama:
+    image: ollama/ollama
+    volumes:
+      - ollama_data:/root/.ollama
+    ports:
+      - "11434:11434"
 
 volumes:
   pgdata:
+  ollama_data:
