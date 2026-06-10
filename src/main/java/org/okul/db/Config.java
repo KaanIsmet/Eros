@@ -2,6 +2,7 @@ package org.okul.db;
 
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
+import org.okul.config.Env;
 import org.okul.model.Role;
 
 public class Config {
@@ -10,9 +11,9 @@ public class Config {
     public static Jdbi getInstance() {
 
         if (jdbi == null) {
-            String url = org.okul.config.Config.get("DB_URL");
-            String user = org.okul.config.Config.get("DB_USER");
-            String password = org.okul.config.Config.get("DB_PASSWORD");
+            String url = Env.get("DB_URL");
+            String user = Env.get("DB_USER");
+            String password = Env.get("DB_PASSWORD");
 
             if (url == null || user == null || password == null) {
                 throw new IllegalStateException(

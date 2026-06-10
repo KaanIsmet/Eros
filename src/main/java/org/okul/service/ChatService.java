@@ -6,7 +6,7 @@ import dev.langchain4j.data.message.UserMessage;
 import dev.langchain4j.model.chat.response.ChatResponse;
 import dev.langchain4j.model.chat.response.StreamingChatResponseHandler;
 import org.okul.ai.OllamaClient;
-import org.okul.config.Config;
+import org.okul.config.Env;
 import org.okul.model.Conversation;
 import org.okul.model.Message;
 import org.okul.model.Role;
@@ -30,7 +30,7 @@ public class ChatService {
     }
 
     public Conversation startConversation(String title) {
-        String modelName = Config.getOrDefault("OLLAMA_MODEL", "llama3");
+        String modelName = Env.getOrDefault("OLLAMA_MODEL", "llama3");
         Conversation conversation = new Conversation(title, modelName);
         return conversationRepository.save(conversation);
     }

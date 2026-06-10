@@ -9,10 +9,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public final class Config {
+public final class Env {
     private static final Map<String, String> dotenv = loadDotenv();
 
-    private Config() {}
+    private Env() {}
 
     public static void load() {
         // Triggers class initialization and .env loading.
@@ -47,7 +47,7 @@ public final class Config {
 
         try {
             Path codeLocation = Path.of(
-                    Config.class.getProtectionDomain().getCodeSource().getLocation().toURI()
+                    Env.class.getProtectionDomain().getCodeSource().getLocation().toURI()
             );
             if (Files.isRegularFile(codeLocation)) {
                 Path jarDir = codeLocation.getParent();
